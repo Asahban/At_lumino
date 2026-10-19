@@ -1,0 +1,5 @@
+
+project_id = "iejgrouyajctktkjzmoc"
+
+[functions.fetch-gold-prices]
+verify_jwt = false  # We'll make this a public endpoint

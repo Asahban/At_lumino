@@ -1,0 +1,823 @@
+import React, { useState } from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { Separator } from '@/components/ui/separator';
+import CertificationBadge from '@/components/CertificationBadge';
+import { 
+  ArrowLeft, 
+  MapPin, 
+  Clock, 
+  Star, 
+  Phone, 
+  Mail, 
+  Globe, 
+  Calendar, 
+  Shield,
+  CheckCircle, 
+  Award, 
+  FileText, 
+  Users, 
+  Share2, 
+  Heart, 
+  MessageCircle,
+  CreditCard, 
+  Tags,
+  Gem
+} from 'lucide-react';
+
+const StoreProfile = () => {
+  const { storeId } = useParams();
+  const navigate = useNavigate();
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  
+  // Mock data for store details
+  const storeDetails = {
+    id: storeId,
+    name: "Rangaswami Jewelers",
+    tagline: "Traditional Craftsmanship with Modern Transparency",
+    rating: 4.8,
+    reviewCount: 528,
+    established: "1942",
+    location: "T. Nagar, Chennai",
+    address: "42, North Usman Road, T. Nagar, Chennai - 600017",
+    phone: "+91 44 2834 0556",
+    email: "contact@rangaswamijewelers.com",
+    website: "www.rangaswamijewelers.com",
+    description: "Established in 1942, Rangaswami Jewelers has been crafting exquisite gold and diamond jewelry for four generations. Our commitment to quality, transparency, and customer satisfaction has made us one of Chennai's most trusted jewelry destinations.",
+    certifications: ["BIS Hallmarked", "IGI Certified", "SGL Certified"],
+    openingHours: {
+      monday: "10:30 AM - 8:00 PM",
+      tuesday: "10:30 AM - 8:00 PM",
+      wednesday: "10:30 AM - 8:00 PM",
+      thursday: "10:30 AM - 8:00 PM",
+      friday: "10:30 AM - 8:00 PM",
+      saturday: "10:30 AM - 9:00 PM",
+      sunday: "11:00 AM - 7:00 PM"
+    },
+    specializations: ["Temple Jewelry", "Bridal Collections", "Diamond Jewelry", "Antique Designs"],
+    paymentOptions: ["Credit/Debit Cards", "UPI", "Bank Transfer", "EMI Available"],
+    goldRates: {
+      "24K": {
+        price: "₹7,249",
+        makingCharges: "8-12%",
+        wastage: "7-9%"
+      },
+      "22K": {
+        price: "₹6,645",
+        makingCharges: "10-15%",
+        wastage: "8-10%"
+      },
+      "18K": {
+        price: "₹5,437",
+        makingCharges: "15-20%",
+        wastage: "5-7%"
+      }
+    },
+    services: ["Gold Exchange", "Jewelry Cleaning", "Custom Designs", "Jewelry Repair", "Old Gold Purchase"],
+    policies: {
+      return: "30-day exchange policy for non-customized jewelry",
+      buyback: "100% value for gold, deduction based on the condition for gemstones",
+      warranty: "Lifetime warranty on craftsmanship",
+    },
+    customerPromises: [
+      "Transparent pricing with no hidden charges",
+      "BIS hallmarked gold with certification",
+      "Free lifetime cleaning and maintenance",
+      "Expert guidance on jewelry selection"
+    ],
+    socialProof: {
+      awards: ["Best Traditional Jeweler 2023", "Customer Satisfaction Award 2022"],
+      featuredIn: ["Femina", "The Hindu", "Times of India"]
+    }
+  };
+
+  const toggleBookmark = () => {
+    setIsBookmarked(!isBookmarked);
+  };
+  
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Navbar />
+      
+      {/* Back button */}
+      <div className="container mx-auto px-4 pt-6">
+        <button 
+          onClick={goBack}
+          className="flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <ArrowLeft className="h-4 w-4 mr-1" />
+          Back to Stores
+        </button>
+      </div>
+      
+      {/* Store Header */}
+      <div className="container mx-auto px-4 py-6">
+        <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-gold/20 overflow-hidden">
+          <div className="h-48 bg-cover bg-center relative" style={{ backgroundImage: "url('/temple-jewelry.jpg')" }}>
+            <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/70"></div>
+            
+            <div className="absolute bottom-0 left-0 p-6 w-full text-white">
+              <div className="flex justify-between items-end">
+                <div>
+                  <h1 className="text-3xl font-serif font-bold">{storeDetails.name}</h1>
+                  <p className="text-white/90">{storeDetails.tagline}</p>
+                  
+                  <div className="flex items-center mt-2 space-x-4">
+                    <span className="flex items-center">
+                      <Star className="h-4 w-4 fill-gold text-gold mr-1" />
+                      <span className="font-medium">{storeDetails.rating}</span>
+                      <span className="text-white/70 text-sm ml-1">({storeDetails.reviewCount} reviews)</span>
+                    </span>
+                    
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gold/20 text-gold border border-gold/30">
+                      BIS Verified
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="flex gap-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="bg-white/20 backdrop-blur-sm border-white/30 text-white hover:bg-white/30"
+                    onClick={toggleBookmark}
+                  >
+                    <Heart className={`h-4 w-4 mr-1 ${isBookmarked ? 'fill-red-500 text-red-500' : ''}`} />
+                    {isBookmarked ? 'Saved' : 'Save'}
+                  </Button>
+                  
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="bg-white/20 backdrop-blur-sm border-white/30 text-white hover:bg-white/30"
+                  >
+                    <Share2 className="h-4 w-4 mr-1" />
+                    Share
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Action Bar */}
+          <div className="px-6 py-4 flex flex-wrap items-center justify-between border-b border-gold/10">
+            <div className="flex items-center space-x-6">
+              <div className="flex items-center">
+                <MapPin className="h-4 w-4 text-gold-dark mr-1.5" />
+                <span>{storeDetails.location}</span>
+              </div>
+              
+              <div className="flex items-center">
+                <Clock className="h-4 w-4 text-gold-dark mr-1.5" />
+                <span>Open Now</span>
+                <span className="text-xs text-graphite/60 ml-1">• Closes 8PM</span>
+              </div>
+              
+              <div className="flex items-center">
+                <Calendar className="h-4 w-4 text-gold-dark mr-1.5" />
+                <span>Est. {storeDetails.established}</span>
+              </div>
+            </div>
+            
+            <div className="mt-4 sm:mt-0 flex space-x-3">
+              <Button 
+                variant="default" 
+                className="bg-gold hover:bg-gold-dark"
+                onClick={() => navigate(`/certified-stores/${storeId}/jewelry`)}
+              >
+                <Gem className="h-4 w-4 mr-2" />
+                View Jewelry Collection
+              </Button>
+              
+              <Button variant="outline" className="border-gold/30 text-gold hover:bg-gold/5">
+                <MessageCircle className="h-4 w-4 mr-2" />
+                Contact Store
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left Column */}
+          <div className="lg:col-span-2 space-y-6">
+            <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-md border border-gold/10 overflow-hidden">
+              <Tabs defaultValue="about">
+                <TabsList className="w-full bg-muted/20 p-0 rounded-none border-b border-gold/10">
+                  <TabsTrigger 
+                    value="about" 
+                    className="px-6 py-3 rounded-none data-[state=active]:border-b-2 data-[state=active]:border-gold"
+                  >
+                    About
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="certifications" 
+                    className="px-6 py-3 rounded-none data-[state=active]:border-b-2 data-[state=active]:border-gold"
+                  >
+                    Certifications
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="pricing" 
+                    className="px-6 py-3 rounded-none data-[state=active]:border-b-2 data-[state=active]:border-gold"
+                  >
+                    Pricing
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="policies" 
+                    className="px-6 py-3 rounded-none data-[state=active]:border-b-2 data-[state=active]:border-gold"
+                  >
+                    Policies
+                  </TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="about" className="p-6">
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="text-xl font-serif mb-3">About the Store</h3>
+                      <p className="text-graphite/80">{storeDetails.description}</p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-lg font-serif mb-3">Specializations</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {storeDetails.specializations.map((specialization) => (
+                          <Badge key={specialization} variant="outline" className="bg-gold/5 border-gold/20">
+                            {specialization}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-lg font-serif mb-3">Services Offered</h3>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {storeDetails.services.map((service) => (
+                          <div key={service} className="flex items-center">
+                            <CheckCircle className="h-4 w-4 text-gold mr-2" />
+                            <span>{service}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-lg font-serif mb-3">Our Promise to Customers</h3>
+                      <div className="bg-gold/5 border border-gold/10 rounded-lg p-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          {storeDetails.customerPromises.map((promise, index) => (
+                            <div key={index} className="flex items-start">
+                              <Shield className="h-5 w-5 text-gold mr-2 mt-0.5" />
+                              <span className="text-graphite/90">{promise}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-lg font-serif mb-3">Recognition</h3>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                          <h4 className="text-sm font-medium text-graphite/70 mb-2">Awards & Recognition</h4>
+                          <div className="space-y-2">
+                            {storeDetails.socialProof.awards.map((award) => (
+                              <div key={award} className="flex items-center">
+                                <Award className="h-4 w-4 text-gold mr-2" />
+                                <span className="text-sm">{award}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-medium text-graphite/70 mb-2">Featured In</h4>
+                          <div className="space-y-2">
+                            {storeDetails.socialProof.featuredIn.map((feature) => (
+                              <div key={feature} className="flex items-center">
+                                <FileText className="h-4 w-4 text-gold mr-2" />
+                                <span className="text-sm">{feature}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </TabsContent>
+                
+                <TabsContent value="certifications" className="p-6">
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="text-xl font-serif mb-4">Certifications & Standards</h3>
+                      <p className="text-graphite/80 mb-6">
+                        We adhere to the highest standards of quality and authenticity. All our jewelry comes with proper certification to ensure transparency and trust.
+                      </p>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="bg-white rounded-lg border border-gold/20 p-5 text-center">
+                          <div className="mx-auto w-16 h-16 flex items-center justify-center bg-gold/10 rounded-full mb-4">
+                            <Shield className="h-8 w-8 text-gold" />
+                          </div>
+                          <h4 className="font-serif text-lg mb-2">BIS Hallmarked</h4>
+                          <p className="text-sm text-graphite/70">
+                            All our gold jewelry is BIS hallmarked, guaranteeing purity according to Indian standards.
+                          </p>
+                          <CertificationBadge type="BIS" className="mt-4 mx-auto" />
+                        </div>
+                        
+                        <div className="bg-white rounded-lg border border-gold/20 p-5 text-center">
+                          <div className="mx-auto w-16 h-16 flex items-center justify-center bg-gold/10 rounded-full mb-4">
+                            <Award className="h-8 w-8 text-gold" />
+                          </div>
+                          <h4 className="font-serif text-lg mb-2">IGI Certified</h4>
+                          <p className="text-sm text-graphite/70">
+                            Our diamond jewelry comes with IGI certification for quality and authenticity verification.
+                          </p>
+                          <CertificationBadge type="IGI" className="mt-4 mx-auto" />
+                        </div>
+                        
+                        <div className="bg-white rounded-lg border border-gold/20 p-5 text-center">
+                          <div className="mx-auto w-16 h-16 flex items-center justify-center bg-gold/10 rounded-full mb-4">
+                            <CheckCircle className="h-8 w-8 text-gold" />
+                          </div>
+                          <h4 className="font-serif text-lg mb-2">SGL Certified</h4>
+                          <p className="text-sm text-graphite/70">
+                            Premium gemstones are certified by SGL, ensuring quality and authenticity.
+                          </p>
+                          <CertificationBadge type="SGL" className="mt-4 mx-auto" />
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-lg font-serif mb-3">How to Verify Certification</h3>
+                      <div className="bg-gold/5 border border-gold/10 rounded-lg p-5">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div>
+                            <h4 className="font-medium mb-3">BIS Hallmark Verification</h4>
+                            <p className="text-sm text-graphite/80 mb-3">
+                              Every piece of gold jewelry comes with a BIS hallmark that includes:
+                            </p>
+                            <ul className="text-sm space-y-2">
+                              <li className="flex items-start">
+                                <span className="w-5 h-5 rounded-full bg-gold/20 text-gold flex items-center justify-center mr-2 mt-0.5">1</span>
+                                <span>BIS Standard Mark</span>
+                              </li>
+                              <li className="flex items-start">
+                                <span className="w-5 h-5 rounded-full bg-gold/20 text-gold flex items-center justify-center mr-2 mt-0.5">2</span>
+                                <span>Purity in Karats</span>
+                              </li>
+                              <li className="flex items-start">
+                                <span className="w-5 h-5 rounded-full bg-gold/20 text-gold flex items-center justify-center mr-2 mt-0.5">3</span>
+                                <span>Assay Center's Mark</span>
+                              </li>
+                              <li className="flex items-start">
+                                <span className="w-5 h-5 rounded-full bg-gold/20 text-gold flex items-center justify-center mr-2 mt-0.5">4</span>
+                                <span>Jeweler's Identification Mark</span>
+                              </li>
+                            </ul>
+                          </div>
+                          
+                          <div>
+                            <h4 className="font-medium mb-3">Diamond Certification</h4>
+                            <p className="text-sm text-graphite/80 mb-3">
+                              IGI certificates provide detailed information about:
+                            </p>
+                            <ul className="text-sm space-y-2">
+                              <li className="flex items-start">
+                                <span className="w-5 h-5 rounded-full bg-gold/20 text-gold flex items-center justify-center mr-2 mt-0.5">1</span>
+                                <span>The 4 Cs: Cut, Color, Clarity, and Carat</span>
+                              </li>
+                              <li className="flex items-start">
+                                <span className="w-5 h-5 rounded-full bg-gold/20 text-gold flex items-center justify-center mr-2 mt-0.5">2</span>
+                                <span>Diamond proportions and measurements</span>
+                              </li>
+                              <li className="flex items-start">
+                                <span className="w-5 h-5 rounded-full bg-gold/20 text-gold flex items-center justify-center mr-2 mt-0.5">3</span>
+                                <span>Unique identification number</span>
+                              </li>
+                              <li className="flex items-start">
+                                <span className="w-5 h-5 rounded-full bg-gold/20 text-gold flex items-center justify-center mr-2 mt-0.5">4</span>
+                                <span>Security features to prevent forgery</span>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </TabsContent>
+                
+                <TabsContent value="pricing" className="p-6">
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="text-xl font-serif mb-3">Transparent Pricing</h3>
+                      <p className="text-graphite/80 mb-6">
+                        We believe in complete price transparency. Here's a breakdown of our gold jewelry pricing components and current rates.
+                      </p>
+                      
+                      <div className="bg-white border border-gold/20 rounded-lg overflow-hidden">
+                        <table className="w-full text-left">
+                          <thead className="bg-gold/10 border-b border-gold/20">
+                            <tr>
+                              <th className="px-4 py-3 font-serif font-medium">Gold Type</th>
+                              <th className="px-4 py-3 font-serif font-medium">Today's Rate</th>
+                              <th className="px-4 py-3 font-serif font-medium">Making Charges</th>
+                              <th className="px-4 py-3 font-serif font-medium">Wastage</th>
+                              <th className="px-4 py-3 font-serif font-medium">GST</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr className="border-b border-gold/10">
+                              <td className="px-4 py-3">24K (99.9% pure)</td>
+                              <td className="px-4 py-3">{storeDetails.goldRates["24K"].price}/g</td>
+                              <td className="px-4 py-3">{storeDetails.goldRates["24K"].makingCharges}</td>
+                              <td className="px-4 py-3">{storeDetails.goldRates["24K"].wastage}</td>
+                              <td className="px-4 py-3">3%</td>
+                            </tr>
+                            <tr className="border-b border-gold/10">
+                              <td className="px-4 py-3">22K (91.7% pure)</td>
+                              <td className="px-4 py-3">{storeDetails.goldRates["22K"].price}/g</td>
+                              <td className="px-4 py-3">{storeDetails.goldRates["22K"].makingCharges}</td>
+                              <td className="px-4 py-3">{storeDetails.goldRates["22K"].wastage}</td>
+                              <td className="px-4 py-3">3%</td>
+                            </tr>
+                            <tr>
+                              <td className="px-4 py-3">18K (75.0% pure)</td>
+                              <td className="px-4 py-3">{storeDetails.goldRates["18K"].price}/g</td>
+                              <td className="px-4 py-3">{storeDetails.goldRates["18K"].makingCharges}</td>
+                              <td className="px-4 py-3">{storeDetails.goldRates["18K"].wastage}</td>
+                              <td className="px-4 py-3">3%</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      
+                      <div className="mt-4 text-sm text-graphite/70">
+                        <p>Last updated: April 7, 2025 • Gold rates fluctuate daily based on market prices</p>
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <h3 className="text-lg font-serif mb-3">Making Charges Explained</h3>
+                        <div className="bg-white rounded-lg border border-gold/20 p-4">
+                          <p className="text-sm text-graphite/80 mb-4">
+                            Making charges vary based on the complexity of design and craftsmanship required:
+                          </p>
+                          
+                          <div className="space-y-4">
+                            <div>
+                              <div className="flex justify-between items-center mb-1">
+                                <span className="text-sm font-medium">Simple Designs</span>
+                                <span className="text-sm">8-10%</span>
+                              </div>
+                              <Progress value={30} className="h-1.5 bg-gold/20" indicatorClassName="bg-gold" />
+                            </div>
+                            
+                            <div>
+                              <div className="flex justify-between items-center mb-1">
+                                <span className="text-sm font-medium">Medium Complexity</span>
+                                <span className="text-sm">12-15%</span>
+                              </div>
+                              <Progress value={50} className="h-1.5 bg-gold/20" indicatorClassName="bg-gold" />
+                            </div>
+                            
+                            <div>
+                              <div className="flex justify-between items-center mb-1">
+                                <span className="text-sm font-medium">Intricate Handcrafted</span>
+                                <span className="text-sm">18-25%</span>
+                              </div>
+                              <Progress value={80} className="h-1.5 bg-gold/20" indicatorClassName="bg-gold" />
+                            </div>
+                            
+                            <div>
+                              <div className="flex justify-between items-center mb-1">
+                                <span className="text-sm font-medium">Premium Designer</span>
+                                <span className="text-sm">25%+</span>
+                              </div>
+                              <Progress value={100} className="h-1.5 bg-gold/20" indicatorClassName="bg-gold" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-serif mb-3">Payment Options</h3>
+                        <div className="bg-white rounded-lg border border-gold/20 p-4">
+                          <div className="grid grid-cols-2 gap-4">
+                            {storeDetails.paymentOptions.map((option) => (
+                              <div key={option} className="flex items-center">
+                                <CreditCard className="h-4 w-4 text-gold mr-2" />
+                                <span className="text-sm">{option}</span>
+                              </div>
+                            ))}
+                          </div>
+                          
+                          <Separator className="my-4 bg-gold/10" />
+                          
+                          <div>
+                            <h4 className="text-sm font-medium mb-2">Special Offers</h4>
+                            <div className="space-y-2">
+                              <div className="flex items-start">
+                                <Tags className="h-4 w-4 text-gold mr-2 mt-0.5" />
+                                <span className="text-sm">Zero making charges on select diamond jewelry</span>
+                              </div>
+                              <div className="flex items-start">
+                                <Tags className="h-4 w-4 text-gold mr-2 mt-0.5" />
+                                <span className="text-sm">10% off on making charges for wedding collections</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </TabsContent>
+                
+                <TabsContent value="policies" className="p-6">
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="text-xl font-serif mb-3">Store Policies</h3>
+                      <p className="text-graphite/80 mb-6">
+                        We strive to ensure complete customer satisfaction through our fair and transparent policies.
+                      </p>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="bg-white rounded-lg border border-gold/20 p-5">
+                          <h4 className="font-serif text-lg mb-3 flex items-center">
+                            <FileText className="h-5 w-5 text-gold mr-2" />
+                            Return Policy
+                          </h4>
+                          <p className="text-sm text-graphite/80">
+                            {storeDetails.policies.return}. Returns must be in original condition with all certification and packaging intact.
+                          </p>
+                          <ul className="mt-3 text-sm space-y-2">
+                            <li className="flex items-start">
+                              <CheckCircle className="h-4 w-4 text-gold mr-2 mt-0.5" />
+                              <span>30-day exchange period</span>
+                            </li>
+                            <li className="flex items-start">
+                              <CheckCircle className="h-4 w-4 text-gold mr-2 mt-0.5" />
+                              <span>Original packaging required</span>
+                            </li>
+                            <li className="flex items-start">
+                              <CheckCircle className="h-4 w-4 text-gold mr-2 mt-0.5" />
+                              <span>Receipt mandatory for all returns</span>
+                            </li>
+                          </ul>
+                        </div>
+                        
+                        <div className="bg-white rounded-lg border border-gold/20 p-5">
+                          <h4 className="font-serif text-lg mb-3 flex items-center">
+                            <FileText className="h-5 w-5 text-gold mr-2" />
+                            Buyback Policy
+                          </h4>
+                          <p className="text-sm text-graphite/80">
+                            {storeDetails.policies.buyback}. Original receipt required for all buyback transactions.
+                          </p>
+                          <ul className="mt-3 text-sm space-y-2">
+                            <li className="flex items-start">
+                              <CheckCircle className="h-4 w-4 text-gold mr-2 mt-0.5" />
+                              <span>Current gold rate applied for buyback</span>
+                            </li>
+                            <li className="flex items-start">
+                              <CheckCircle className="h-4 w-4 text-gold mr-2 mt-0.5" />
+                              <span>Minimum 3-month ownership period</span>
+                            </li>
+                            <li className="flex items-start">
+                              <CheckCircle className="h-4 w-4 text-gold mr-2 mt-0.5" />
+                              <span>Identity verification required</span>
+                            </li>
+                          </ul>
+                        </div>
+                        
+                        <div className="bg-white rounded-lg border border-gold/20 p-5">
+                          <h4 className="font-serif text-lg mb-3 flex items-center">
+                            <FileText className="h-5 w-5 text-gold mr-2" />
+                            Warranty Policy
+                          </h4>
+                          <p className="text-sm text-graphite/80">
+                            {storeDetails.policies.warranty}. Regular maintenance recommended for optimal condition.
+                          </p>
+                          <ul className="mt-3 text-sm space-y-2">
+                            <li className="flex items-start">
+                              <CheckCircle className="h-4 w-4 text-gold mr-2 mt-0.5" />
+                              <span>Free cleaning and polishing service</span>
+                            </li>
+                            <li className="flex items-start">
+                              <CheckCircle className="h-4 w-4 text-gold mr-2 mt-0.5" />
+                              <span>Stone resetting at nominal charges</span>
+                            </li>
+                            <li className="flex items-start">
+                              <CheckCircle className="h-4 w-4 text-gold mr-2 mt-0.5" />
+                              <span>Structural repairs covered under warranty</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-lg font-serif mb-3">Shipping & Delivery</h3>
+                      <div className="bg-white rounded-lg border border-gold/20 p-5">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div>
+                            <h4 className="font-medium mb-3">Delivery Options</h4>
+                            <ul className="text-sm space-y-3">
+                              <li className="flex items-start">
+                                <span className="w-5 h-5 rounded-full bg-gold/20 text-gold flex items-center justify-center mr-2 mt-0.5">1</span>
+                                <div>
+                                  <p className="font-medium">In-store Pickup</p>
+                                  <p className="text-graphite/70">Available immediately for in-stock items</p>
+                                </div>
+                              </li>
+                              <li className="flex items-start">
+                                <span className="w-5 h-5 rounded-full bg-gold/20 text-gold flex items-center justify-center mr-2 mt-0.5">2</span>
+                                <div>
+                                  <p className="font-medium">Standard Shipping</p>
+                                  <p className="text-graphite/70">3-5 business days, free for orders above ₹20,000</p>
+                                </div>
+                              </li>
+                              <li className="flex items-start">
+                                <span className="w-5 h-5 rounded-full bg-gold/20 text-gold flex items-center justify-center mr-2 mt-0.5">3</span>
+                                <div>
+                                  <p className="font-medium">Express Delivery</p>
+                                  <p className="text-graphite/70">1-2 business days, additional charges apply</p>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                          
+                          <div>
+                            <h4 className="font-medium mb-3">Insurance & Safety</h4>
+                            <ul className="text-sm space-y-3">
+                              <li className="flex items-start">
+                                <Shield className="h-4 w-4 text-gold mr-2 mt-0.5" />
+                                <span>All shipments are fully insured against loss or damage</span>
+                              </li>
+                              <li className="flex items-start">
+                                <Shield className="h-4 w-4 text-gold mr-2 mt-0.5" />
+                                <span>Discreet packaging with no indication of contents</span>
+                              </li>
+                              <li className="flex items-start">
+                                <Shield className="h-4 w-4 text-gold mr-2 mt-0.5" />
+                                <span>Signature confirmation required for all deliveries</span>
+                              </li>
+                              <li className="flex items-start">
+                                <Shield className="h-4 w-4 text-gold mr-2 mt-0.5" />
+                                <span>Real-time tracking available for all shipments</span>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </div>
+          </div>
+          
+          {/* Right Column */}
+          <div className="space-y-6">
+            <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-md border border-gold/10 p-6">
+              <h3 className="text-lg font-serif mb-4">Contact Information</h3>
+              
+              <div className="space-y-4">
+                <div className="flex">
+                  <MapPin className="h-5 w-5 text-gold flex-shrink-0 mr-3" />
+                  <div>
+                    <p className="font-medium">Store Address</p>
+                    <p className="text-sm text-graphite/70">{storeDetails.address}</p>
+                    <a href="#" className="text-sm text-gold hover:underline mt-1 inline-block">View on Map</a>
+                  </div>
+                </div>
+                
+                <div className="flex">
+                  <Phone className="h-5 w-5 text-gold flex-shrink-0 mr-3" />
+                  <div>
+                    <p className="font-medium">Phone</p>
+                    <p className="text-sm text-graphite/70">{storeDetails.phone}</p>
+                  </div>
+                </div>
+                
+                <div className="flex">
+                  <Mail className="h-5 w-5 text-gold flex-shrink-0 mr-3" />
+                  <div>
+                    <p className="font-medium">Email</p>
+                    <p className="text-sm text-graphite/70">{storeDetails.email}</p>
+                  </div>
+                </div>
+                
+                <div className="flex">
+                  <Globe className="h-5 w-5 text-gold flex-shrink-0 mr-3" />
+                  <div>
+                    <p className="font-medium">Website</p>
+                    <p className="text-sm text-graphite/70">{storeDetails.website}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-md border border-gold/10 p-6">
+              <h3 className="text-lg font-serif mb-4">Store Hours</h3>
+              
+              <div className="space-y-3">
+                <div className="flex justify-between">
+                  <span className="text-graphite/80">Monday</span>
+                  <span>{storeDetails.openingHours.monday}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-graphite/80">Tuesday</span>
+                  <span>{storeDetails.openingHours.tuesday}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-graphite/80">Wednesday</span>
+                  <span>{storeDetails.openingHours.wednesday}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-graphite/80">Thursday</span>
+                  <span>{storeDetails.openingHours.thursday}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-graphite/80">Friday</span>
+                  <span>{storeDetails.openingHours.friday}</span>
+                </div>
+                <div className="flex justify-between font-medium">
+                  <span className="text-graphite/80">Saturday</span>
+                  <span>{storeDetails.openingHours.saturday}</span>
+                </div>
+                <div className="flex justify-between font-medium">
+                  <span className="text-graphite/80">Sunday</span>
+                  <span>{storeDetails.openingHours.sunday}</span>
+                </div>
+              </div>
+              
+              <Separator className="my-4 bg-gold/10" />
+              
+              <div className="text-sm text-center text-graphite/70">
+                <p>Open on all public holidays</p>
+                <p>Special hours during festival season</p>
+              </div>
+            </div>
+            
+            <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-md border border-gold/10 p-6">
+              <h3 className="text-lg font-serif mb-4">Connect with Us</h3>
+              
+              <div className="flex justify-center space-x-4">
+                <Button variant="outline" size="icon" className="rounded-full border-gold/30 hover:bg-gold/10">
+                  <svg className="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.794.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
+                  </svg>
+                  <span className="sr-only">Facebook</span>
+                </Button>
+                <Button variant="outline" size="icon" className="rounded-full border-gold/30 hover:bg-gold/10">
+                  <svg className="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.06 1.805.249 2.227.419.562.217.96.477 1.382.896.419.42.679.819.896 1.381.17.422.36 1.057.419 2.227.058 1.265.07 1.645.07 4.85s-.012 3.585-.07 4.85c-.06 1.17-.249 1.805-.419 2.227-.217.562-.477.96-.896 1.382-.419.419-.819.679-1.382.896-.422.17-1.057.36-2.227.419-1.265.058-1.645.07-4.85.07s-3.585-.012-4.85-.07c-1.17-.06-1.805-.249-2.227-.419-.562-.217-.96-.477-1.382-.896-.419-.419-.679-.819-.896-1.382-.17-.422-.36-1.057-.419-2.227-.058-1.265-.07-1.645-.07-4.85s.012-3.585.07-4.85c.06-1.17.249-1.805.419-2.227.217-.562.477-.96.896-1.382.419-.419.819-.679 1.382-.896.422-.17 1.057-.36 2.227-.419 1.265-.06 1.645-.07 4.85-.07zm0-2.163c-3.259 0-3.668.014-4.948.072-1.278.06-2.149.261-2.913.558-.789.306-1.459.718-2.126 1.384-.666.667-1.079 1.335-1.384 2.126-.297.765-.499 1.635-.558 2.913-.06 1.28-.072 1.689-.072 4.948s.014 3.668.072 4.948c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558 1.281.06 1.69.072 4.948.072s3.668-.014 4.948-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.689.072-4.948s-.014-3.668-.072-4.948c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126-.667-.667-1.335-1.079-2.126-1.385-.766-.297-1.636-.499-2.913-.558-1.28-.058-1.689-.072-4.948-.072z"/>
+                    <path d="M12 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4z"/>
+                    <path d="M19.846 5.595c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.44 1.44-1.44.793-.001 1.44.645 1.44 1.44z"/>
+                  </svg>
+                  <span className="sr-only">Instagram</span>
+                </Button>
+                <Button variant="outline" size="icon" className="rounded-full border-gold/30 hover:bg-gold/10">
+                  <svg className="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                  </svg>
+                  <span className="sr-only">Twitter</span>
+                </Button>
+                <Button variant="outline" size="icon" className="rounded-full border-gold/30 hover:bg-gold/10">
+                  <svg className="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                  </svg>
+                  <span className="sr-only">GitHub</span>
+                </Button>
+              </div>
+              
+              <div className="mt-4">
+                <Button className="w-full bg-gold hover:bg-gold-dark">
+                  <Users className="h-4 w-4 mr-2" />
+                  Request Appointment
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <Footer />
+    </div>
+  );
+};
+
+export default StoreProfile;
