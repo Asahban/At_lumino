@@ -1,3 +1,4 @@
+HEAD
 # Welcome to your Lovable project
 
 ## Project info
@@ -71,3 +72,6 @@ Yes it is!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+# Atlumino
+Altumino is a jewelry price transparency and comparison platform that helps users compare gold jewelry prices, explore certified retailers, understand pricing breakdowns, and make informed purchasing decisions through transparent pricing and trusted store information.0d17367e4622c041054c903b9d45b8b35e516929
